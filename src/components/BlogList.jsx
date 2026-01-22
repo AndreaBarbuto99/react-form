@@ -1,11 +1,14 @@
 import { useState } from "react";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faMinus } from '@fortawesome/free-solid-svg-icons';
 
 const initialBlogList = [
-    "10 Trucchi React per Sviluppatori alle Prime Armi",
-    "Dal BBQ Perfetto al Codice Pulito: Lezioni di Precisione",
-    "Masterizza JavaScript: Da Zero a LeetCode Hero",
-    "Automazione Web con JS: Bot per il Tuo Workflow Quotidiano"
+    "React Hooks Guida Completa",
+    "CSS Grid vs Flexbox",
+    "JavaScript async/await",
+    "Performance React"
 ];
+
 
 export default function BlogList() {
 
@@ -21,6 +24,14 @@ export default function BlogList() {
 
     }
 
+    function removeBlog(i) {
+        const newBlogList = blogs.filter((_, index) => {
+            return index !== i
+        })
+        setBlogs(newBlogList)
+
+    }
+
 
 
     return (
@@ -30,7 +41,13 @@ export default function BlogList() {
 
             <div className="container mt-5">
                 {blogs.map((blog, index) => {
-                    return <p key={index} className="border border-2 border-primary rounded p-2 bg-light">{blog}</p>
+                    return (<div key={index} className="border border-2 border-primary rounded p-2 bg-light d-flex align-items-center justify-content-between">
+                        <p className="m-0">
+                            {blog}
+                        </p>
+                        <button className="btn btn-light " onClick={() => removeBlog(index)}><FontAwesomeIcon icon={faMinus} /></button>
+                    </div>
+                    )
                 })}
             </div>
             <form onSubmit={addBlog}>
