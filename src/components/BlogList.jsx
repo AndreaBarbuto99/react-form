@@ -3,11 +3,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMinus } from '@fortawesome/free-solid-svg-icons';
 
 const initialBlogList = [
-    "React Hooks Guida Completa",
-    "CSS Grid vs Flexbox",
-    "JavaScript async/await",
-    "Performance React"
+    { id: 1, content: "React Hooks Guida Completa: useState, useEffect e useContext spiegati passo passo" },
+    { id: 2, content: "CSS Grid vs Flexbox: quando usare quale layout system nei progetti moderni" },
+    { id: 3, content: "JavaScript async/await: gestire Promise senza callback hell con best practices 2026" },
+    { id: 4, content: "Performance React: useMemo, useCallback e React.memo per app velocissime" }
 ];
+
 
 
 export default function BlogList() {
@@ -15,18 +16,21 @@ export default function BlogList() {
     const [blogs, setBlogs] = useState(initialBlogList);
     const [newBlog, setNewBlog] = useState("");
 
-    // return principale della funzione e component BlogList //
+
     function addBlog(e) {
         e.preventDefault();
-        const newBlogList = [...blogs, newBlog]
-        setBlogs(newBlogList);
+        const newBlogList = {
+            id: blogs.length + 1,
+            content: newBlog
+        };
+        setBlogs([...blogs, newBlogList]);
         setNewBlog("");
 
     }
 
     function removeBlog(i) {
         const newBlogList = blogs.filter((_, index) => {
-            return index !== i
+            return index !== 0
         })
         setBlogs(newBlogList)
 
@@ -40,12 +44,12 @@ export default function BlogList() {
             <h1>Blog</h1>
 
             <div className="container mt-5">
-                {blogs.map((blog, index) => {
-                    return (<div key={index} className="border border-2 border-primary rounded p-2 bg-light d-flex align-items-center justify-content-between">
+                {blogs.map((blog) => {
+                    return (<div key={blog.id} className="border border-2 border-primary rounded p-2 bg-light d-flex align-items-center justify-content-between">
                         <p className="m-0">
-                            {blog}
+                            {blog.content}
                         </p>
-                        <button className="btn btn-light " onClick={() => removeBlog(index)}><FontAwesomeIcon icon={faMinus} /></button>
+                        <button className="btn btn-light " onClick={() => removeBlog(blog.id)}><FontAwesomeIcon icon={faMinus} /></button>
                     </div>
                     )
                 })}
